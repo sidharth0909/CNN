@@ -1,0 +1,38 @@
+/* DisasterResourceApp.css */
+
+/* Container styling */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Dropdown styling */
+.select-container {
+  margin-bottom: 15px;
+}
+
+/* Datepicker styling */
+.datepicker-container {
+  margin-bottom: 15px;
+}
+
+/* Button styling */
+button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* Reset button styling */
+.reset-button {
+  background-color: #ccc;
+}
+
+/* Send Request button styling */
+.send-request-button {
+  background-color: #1e4356;
+  color: #fff;
+}
+
+/* Add more styles as needed */

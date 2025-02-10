@@ -1,0 +1,30 @@
+/* Carousel.css */
+.carousel-slide {
+  position: relative;
+}
+
+.carousal-img {
+  width: 100vw !important;
+  height: 35rem !important;
+  margin: 0 auto;
+}
+
+.grey-box {
+  width: 400px;
+  position: absolute;
+  bottom: 70px;
+  right: 125px;
+  background-color: rgba(30, 67, 86, 1);
+  padding: 40px;
+  border-radius: 8px;
+  color: white;
+}
+
+.button-c {
+  padding: 10px;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #1e4356 !important;
+}
