@@ -25,4 +25,4 @@ dist-ssr
 *.h5
 *.pyc
 *.env
-
+src/env/
