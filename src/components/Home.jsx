@@ -67,7 +67,7 @@ const Home = () => {
   // Define available options and their corresponding URLs
   const monitoringOptions = {
     "Heavy Rain": "https://mosdac.gov.in/heavy-rain/",
-    "Recent Earthquake": "https://riseq.seismo.gov.in/riseq/earthquake/",
+    "Recent Earthquake": "https://riseq.seismo.gov.in/riseq/earthquake/recent_earthquake",
     "Heat": "https://mosdac.gov.in/temperature/",
   };
 

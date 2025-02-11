@@ -8,3 +8,10 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 To start type -> npm run dev
+for python file -> python file.py
+
+
+
+twitter api -> https://developer.x.com/en/portal/dashboard
+5001 port for twitter
+5000 port for classification

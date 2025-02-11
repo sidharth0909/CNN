@@ -167,3 +167,192 @@ const Weather = () => {
 };
 
 export default Weather;
+
+
+
+// import React, { useEffect, useState } from "react";
+// import { motion } from "framer-motion";
+// // SIZE REDUCTION 1: Replace image imports with react-icons
+// import { WiHumidity, WiStrongWind, WiDayCloudy, WiRain, WiSnow, WiDaySunny } from "react-icons/wi";
+// import { TbTemperature, TbCloudRain, TbMist, TbWind } from "react-icons/tb";
+// import { FiSearch } from "react-icons/fi";
+
+// const Weather = () => {
+//   const [search, setSearch] = useState("");
+//   const [res, setRes] = useState(null);
+//   const [weatherIcon, setWeatherIcon] = useState(<WiDaySunny />);
+//   const [pollution, setPollution] = useState(null);
+//   const [suggestions, setSuggestions] = useState([]);
+//   const [countries, setCountries] = useState([]);
+//   const [selectedCountry, setSelectedCountry] = useState("");
+
+//   // SIZE REDUCTION 2: Convert to array lookup
+//   const getAQIText = (aqi) => 
+//     ["N/A", "Good", "Fair", "Moderate", "Poor", "Very Poor"][aqi] || "N/A";
+
+//   useEffect(() => {
+//     // SIZE REDUCTION 3: Replace with static country list if needed
+//     fetch("https://restcountries.com/v3.1/all")
+//       .then((res) => res.json())
+//       .then(data => setCountries(data.map(c => ({
+//         name: c.name.common,
+//         code: c.cca2
+//       })).sort((a,b) => a.name.localeCompare(b.name))));
+//   }, []);
+
+//   const checkWeather = async (city) => {
+//     try {
+//       const geoRes = await fetch(
+//         `https://api.openweathermap.org/geo/1.0/direct?q=${city},${selectedCountry}&limit=1&appid=37c7fd46488e0a04a9a39ae49f638db4`
+//       );
+//       const geoData = await geoRes.json();
+      
+//       if (!geoRes.ok || !geoData[0]) throw new Error("City not found");
+      
+//       const { lat, lon } = geoData[0];
+//       const [weatherRes, pollutionRes] = await Promise.all([
+//         fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&appid=37c7fd46488e0a04a9a39ae49f638db4&lat=${lat}&lon=${lon}`),
+//         fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=37c7fd46488e0a04a9a39ae49f638db4`)
+//       ]);
+
+//       const weatherData = await weatherRes.json();
+//       const pollutionData = await pollutionRes.json();
+
+//       // SIZE REDUCTION 4: Simplify icon handling
+//       const icons = {
+//         Clouds: <WiDayCloudy />,
+//         Clear: <WiDaySunny />,
+//         Rain: <TbCloudRain />,
+//         Drizzle: <WiRain />,
+//         Mist: <TbMist />,
+//         Snow: <WiSnow />
+//       };
+//       setWeatherIcon(icons[weatherData.weather[0].main] || <WiDaySunny />);
+
+//       setRes(weatherData);
+//       setPollution(pollutionData);
+//     } catch (error) {
+//       alert("Invalid city name");
+//       setRes(null);
+//     }
+//   };
+
+//   // SIZE REDUCTION 5: Debounce search suggestions
+//   useEffect(() => {
+//     const timer = setTimeout(async () => {
+//       if (search.length > 2 && selectedCountry) {
+//         try {
+//           const res = await fetch(
+//             `https://api.openweathermap.org/geo/1.0/direct?q=${search},${selectedCountry}&limit=5&appid=37c7fd46488e0a04a9a39ae49f638db4`
+//           );
+//           const data = await res.json();
+//           setSuggestions(data.map(city => city.name));
+//         } catch (error) { setSuggestions([]); }
+//       }
+//     }, 300);
+//     return () => clearTimeout(timer);
+//   }, [search, selectedCountry]);
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 50 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       className="max-w-[450px] mx-auto bg-gradient-to-br from-blue-500 to-blue-900 text-white rounded-3xl p-6 mt-10"
+//     >
+//       <h1 className="text-4xl font-bold mb-6">Weather App</h1>
+
+//       <select
+//         value={selectedCountry}
+//         onChange={(e) => setSelectedCountry(e.target.value)}
+//         className="w-full p-3 rounded-2xl bg-white/20 mb-4"
+//       >
+//         <option value="">Select Country</option>
+//         {countries.map((c) => (
+//           <option key={c.code} value={c.code}>{c.name}</option>
+//         ))}
+//       </select>
+
+//       <div className="relative mb-8">
+//         <div className="flex items-center bg-white/20 p-2 rounded-2xl">
+//           <input
+//             value={search}
+//             onChange={(e) => setSearch(e.target.value)}
+//             placeholder={selectedCountry ? "Enter city" : "Select country first"}
+//             className="flex-1 bg-transparent p-2"
+//             disabled={!selectedCountry}
+//           />
+//           <button 
+//             onClick={() => checkWeather(search)}
+//             className="p-2 hover:bg-white/20 rounded-xl"
+//           >
+//             <FiSearch size={24} />
+//           </button>
+//         </div>
+
+//         {suggestions.length > 0 && (
+//           <motion.ul className="absolute bg-white/90 text-black w-full rounded-xl mt-2">
+//             {suggestions.map((s) => (
+//               <li
+//                 key={s}
+//                 onClick={() => checkWeather(s)}
+//                 className="p-2 hover:bg-blue-100 cursor-pointer"
+//               >
+//                 {s}
+//               </li>
+//             ))}
+//           </motion.ul>
+//         )}
+//       </div>
+
+//       {res && (
+//         <motion.div className="space-y-6">
+//           <div className="bg-white/10 p-6 rounded-3xl">
+//             <div className="text-8xl mb-4">{weatherIcon}</div>
+//             <h2 className="text-6xl font-bold">{Math.round(res.main.temp)}°C</h2>
+//             <p className="text-2xl mt-2">{res.name}</p>
+//             <p className="capitalize">{res.weather[0].description}</p>
+//           </div>
+
+//           <div className="grid grid-cols-2 gap-4">
+//             {/* SIZE REDUCTION 6: Create reusable WeatherCard component */}
+//             <div className="bg-white/10 p-4 rounded-2xl">
+//               <div className="flex items-center gap-2 mb-2">
+//                 <WiHumidity size={24} />
+//                 <span>Humidity</span>
+//               </div>
+//               <p className="text-2xl font-bold">{res.main.humidity}%</p>
+//             </div>
+
+//             <div className="bg-white/10 p-4 rounded-2xl">
+//               <div className="flex items-center gap-2 mb-2">
+//                 <TbWind size={24} />
+//                 <span>Wind</span>
+//               </div>
+//               <p className="text-2xl font-bold">{res.wind.speed} km/h</p>
+//             </div>
+
+//             <div className="bg-white/10 p-4 rounded-2xl">
+//               <div className="flex items-center gap-2 mb-2">
+//                 <WiDayCloudy size={24} />
+//                 <span>Air Quality</span>
+//               </div>
+//               <p className="text-2xl font-bold">
+//                 {getAQIText(pollution?.list[0]?.main?.aqi)}
+//               </p>
+//             </div>
+
+//             <div className="bg-white/10 p-4 rounded-2xl">
+//               <div className="flex items-center gap-2 mb-2">
+//                 <TbTemperature size={24} />
+//                 <span>Feels Like</span>
+//               </div>
+//               <p className="text-2xl font-bold">{res.main.feels_like}°C</p>
+//             </div>
+//           </div>
+//         </motion.div>
+//       )}
+//     </motion.div>
+//   );
+// };
+
+// export default Weather;

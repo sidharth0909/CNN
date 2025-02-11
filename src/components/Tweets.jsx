@@ -24,7 +24,7 @@ const Tweets = () => {
     setErrorMessage("");
     
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/tweets?q=${encodeURIComponent(query)}`);
+      const response = await fetch(`http://127.0.0.1:5001/api/tweets?q=${encodeURIComponent(query)}`);
       const data = await response.json();
       
       if (data.error) throw new Error(data.error);

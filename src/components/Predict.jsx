@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import emailjs from '@emailjs/browser';
+import { FiCamera, FiAlertTriangle, FiBook, FiMapPin, FiMail, FiXCircle } from "react-icons/fi";
 
 emailjs.init('S8HZVEJfLhIH6G-gp');
 
@@ -18,8 +19,8 @@ const Predict = () => {
   const [infraImage, setInfraImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [infraPreview, setInfraPreview] = useState(null);
-  const [response, setResponse] = useState();
-  const [infraResponse, setInfraResponse] = useState();
+  const [response, setResponse] = useState(null);
+  const [infraResponse, setInfraResponse] = useState(null);
   const [isHelpMode, setIsHelpMode] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
@@ -27,6 +28,8 @@ const Predict = () => {
   const [helpImage, setHelpImage] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const [error, setError] = useState(null);
+  const [classificationType, setClassificationType] = useState('');
 
   useEffect(() => {
     if (cameraActive) {
@@ -114,8 +117,9 @@ const Predict = () => {
   };
 
   const EmailNotification = () => (
-    <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
-      Alert sent to authorities successfully!
+    <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-slide-in">
+      <FiMail className="text-xl" />
+      <span>Alert sent to authorities successfully!</span>
     </div>
   );
 
@@ -125,6 +129,7 @@ const Predict = () => {
       const data = await convertToBase64(file);
       setPreview(data);
       setImage(file);
+      setResponse(null); // Clear previous results
     }
   };
 
@@ -134,6 +139,7 @@ const Predict = () => {
       const data = await convertToBase64(file);
       setInfraPreview(data);
       setInfraImage(file);
+      setInfraResponse(null); // Clear previous results
     }
   };
 
@@ -151,30 +157,31 @@ const Predict = () => {
       console.error('Error getting location:', error);
     }
 
-    // Submit to disaster endpoint
-    const formDataDisaster = new FormData();
-    formDataDisaster.append("image", helpImage);
+    // Reset previous results
+    setResponse(null);
+    setInfraResponse(null);
+
+    // Submit to both endpoints
     try {
+      const formDataDisaster = new FormData();
+      formDataDisaster.append("image", helpImage);
       const resDisaster = await axios.post("http://127.0.0.1:5000/predict_image", formDataDisaster);
+      
       if (resDisaster.status === 200) {
         setResponse(resDisaster.data);
         await sendEmail('Disaster Classification', resDisaster.data.class, location, mapUrl);
       }
-    } catch (error) {
-      console.error('Disaster classification error:', error);
-    }
 
-    // Submit to infra endpoint
-    const formDataInfra = new FormData();
-    formDataInfra.append("infrastructure_image", helpImage);
-    try {
+      const formDataInfra = new FormData();
+      formDataInfra.append("infrastructure_image", helpImage);
       const resInfra = await axios.post("http://127.0.0.1:5000/predict_infra", formDataInfra);
+      
       if (resInfra.status === 200) {
         setInfraResponse(resInfra.data);
         await sendEmail('Infrastructure Vulnerability', resInfra.data.damage_class, location, mapUrl);
       }
     } catch (error) {
-      console.error('Infrastructure classification error:', error);
+      console.error('Classification error:', error);
     }
   };
 
@@ -197,44 +204,68 @@ const Predict = () => {
   };
 
   return (
-    <div className="mt-28 container mx-auto px-4 min-h-screen bg-gray-50">
+    <div className="mt-20 container mx-auto px-4 min-h-screen bg-gray-50">
       {emailSent && <EmailNotification />}
 
       <div className="text-center py-8">
         <button
-          onClick={() => setIsHelpMode(!isHelpMode)}
-          className={`py-2 px-6 rounded-lg font-semibold transition-colors ${
+          onClick={() => {
+            setIsHelpMode(!isHelpMode);
+            setResponse(null);
+            setInfraResponse(null);
+          }}
+          className={`py-3 px-8 rounded-xl font-semibold transition-all flex items-center gap-2 mx-auto ${
             isHelpMode 
-              ? 'bg-red-500 hover:bg-red-600 text-white'
-              : 'bg-green-500 hover:bg-green-600 text-white'
-          }`}
+              ? 'bg-red-500 hover:bg-red-600 text-white shadow-red'
+              : 'bg-blue-500 hover:bg-blue-600 text-white shadow-blue'
+          } shadow-lg hover:shadow-xl`}
         >
-          {isHelpMode ? 'Education Mode' : 'Emergency Mode'}
+          {isHelpMode ? (
+            <>
+              <FiBook className="text-lg" />
+              Switch to Education Mode
+            </>
+          ) : (
+            <>
+              <FiAlertTriangle className="text-lg" />
+              Activate Emergency Mode
+            </>
+          )}
         </button>
-        <p className="mt-2 text-sm text-gray-600">
+        <p className="mt-3 text-sm text-gray-600 flex items-center justify-center gap-2">
+          <FiMapPin className="text-red-500" />
           {isHelpMode ? 'Emergency alerts enabled - location sharing active' : 'Educational mode - no alerts will be sent'}
         </p>
       </div>
 
       {isHelpMode ? (
         <div className="grid md:grid-cols-5 gap-8 mt-8">
-          <div className="md:col-span-2 bg-white p-6 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-6 text-red-600">Emergency Assistance</h2>
-            <div className="mb-4">
+          {/* Emergency Input Section */}
+          <div className="md:col-span-2 bg-white p-6 rounded-2xl shadow-xl border-2 border-red-100">
+            <h2 className="text-2xl font-bold mb-6 text-red-600 flex items-center gap-2">
+              <FiAlertTriangle /> Emergency Assistance
+            </h2>
+            
+            <div className="mb-6">
               <button
                 onClick={() => setCameraActive(!cameraActive)}
-                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                className="bg-red-500 text-white py-3 px-6 rounded-xl hover:bg-red-600 transition-all w-full flex items-center justify-center gap-2"
               >
+                <FiCamera className="text-xl" />
                 {cameraActive ? 'Stop Camera' : 'Activate Camera'}
               </button>
             </div>
 
             {cameraActive && (
-              <div className="mb-4">
-                <video ref={videoRef} autoPlay className="w-full rounded-lg border-2 border-gray-200 mb-4"></video>
+              <div className="mb-6 space-y-4">
+                <video 
+                  ref={videoRef} 
+                  autoPlay 
+                  className="w-full rounded-xl border-2 border-gray-200 aspect-video"
+                ></video>
                 <button
                   onClick={capturePhoto}
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors w-full"
+                  className="bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-xl font-semibold w-full flex items-center justify-center gap-2 transition-all"
                 >
                   Capture Emergency Photo
                 </button>
@@ -243,43 +274,57 @@ const Predict = () => {
             )}
 
             {helpPreview && (
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-3">Captured Photo:</h3>
-                <img src={helpPreview} alt="Emergency Preview" className="w-full h-64 object-cover rounded-lg border-2 border-gray-200" />
+              <div className="mt-6 space-y-4">
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <FiCamera /> Captured Photo:
+                </h3>
+                <img 
+                  src={helpPreview} 
+                  alt="Emergency Preview" 
+                  className="w-full h-64 object-cover rounded-xl border-2 border-gray-200" 
+                />
                 <button
                   onClick={handleHelpSubmit}
-                  className="bg-red-600 hover:bg-red-700 text-white py-3 px-8 rounded-lg font-semibold mt-4 w-full transition-colors"
+                  className="bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-xl font-semibold w-full flex items-center justify-center gap-2 transition-all"
                 >
-                  Send Emergency Alert
+                  <FiAlertTriangle /> Send Emergency Alert
                 </button>
               </div>
             )}
           </div>
 
-          <div className="md:col-span-3 bg-white p-6 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Analysis Results</h2>
-            <div className="space-y-8">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-xl font-semibold mb-3 text-blue-600">Disaster Analysis</h3>
+          {/* Emergency Results Section */}
+          <div className="md:col-span-3 bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-100">
+            <h2 className="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-2">
+              <FiMapPin /> Emergency Analysis
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-red-50 p-6 rounded-xl">
+                <h3 className="text-xl font-semibold mb-4 text-red-600 flex items-center gap-2">
+                  Disaster Analysis
+                </h3>
                 {response ? (
                   <>
-                    <div className="text-lg font-bold text-gray-800 mb-2">{response.class}</div>
-                    <p className="text-gray-600">{response.info}</p>
+                    <div className="text-lg font-bold text-red-700 mb-3">{response.class}</div>
+                    <p className="text-gray-700 leading-relaxed">{response.info}</p>
                   </>
                 ) : (
-                  <p className="text-gray-400 italic">No disaster analysis available</p>
+                  <p className="text-gray-400 italic">Waiting for disaster analysis...</p>
                 )}
               </div>
 
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-xl font-semibold mb-3 text-blue-600">Infrastructure Assessment</h3>
+              <div className="bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-xl font-semibold mb-4 text-blue-600 flex items-center gap-2">
+                  Infrastructure Assessment
+                </h3>
                 {infraResponse ? (
                   <>
-                    <div className="text-lg font-bold text-gray-800 mb-2">{infraResponse.damage_class}</div>
-                    <p className="text-gray-600">{infraResponse.damage_info}</p>
+                    <div className="text-lg font-bold text-blue-700 mb-3">{infraResponse.damage_class}</div>
+                    <p className="text-gray-700 leading-relaxed">{infraResponse.damage_info}</p>
                   </>
                 ) : (
-                  <p className="text-gray-400 italic">No infrastructure assessment available</p>
+                  <p className="text-gray-400 italic">Waiting for infrastructure assessment...</p>
                 )}
               </div>
             </div>
@@ -287,95 +332,108 @@ const Predict = () => {
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-8 mt-8">
-  {/* Disaster Education Section */}
-  <div className="bg-white p-6 rounded-xl shadow-lg">
-    <h2 className="text-2xl font-bold mb-6 text-blue-600">Disaster Education</h2>
-    <form onSubmit={handleImageSubmit}>
-      <label className="block mb-4">
-        <span className="text-gray-700">Upload Disaster Image:</span>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-        />
-      </label>
-      <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg transition-colors"
-      >
-        Analyze
-      </button>
-    </form>
+          {/* Disaster Education Section */}
+          <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-100">
+            <h2 className="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-2">
+              <FiAlertTriangle /> Disaster Education
+            </h2>
+            
+            <form onSubmit={handleImageSubmit} className="space-y-6">
+              <label className="block">
+                <span className="text-gray-700 mb-2 block">Upload Disaster Image:</span>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="block w-full text-sm text-gray-500 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
+                  />
+                </div>
+              </label>
+              
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg transition-colors flex items-center gap-2 w-full justify-center"
+              >
+                Analyze Disaster
+              </button>
+            </form>
 
-    {preview && (
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-3">Preview:</h3>
-        <img src={preview} alt="Disaster Preview" className="w-full h-64 object-cover rounded-lg border-2 border-gray-200" />
-      </div>
-    )}
+            {preview && (
+              <div className="mt-6 space-y-4">
+                <h3 className="text-lg font-semibold">Preview:</h3>
+                <img 
+                  src={preview} 
+                  alt="Disaster Preview" 
+                  className="w-full h-64 object-cover rounded-xl border-2 border-gray-200" 
+                />
+              </div>
+            )}
 
-    {response && (
-      <div className="mt-6 bg-gray-50 p-4 rounded-lg">
-        <h3 className="text-xl font-semibold mb-2 text-blue-600">Analysis Result:</h3>
-        <div className="text-lg font-bold text-gray-800 mb-2">{response.class}</div>
-        <div className="text-gray-600">
-          {response.info.split("\n").map((line, index) => {
-            if (line.trim().endsWith(":")) {
-              return <p key={index} className="font-bold mt-4">{line.trim()}</p>; // Bold title without bullet
-            }
-            return line.trim() ? <li key={index} className="list-disc list-inside">{line}</li> : <br key={index} />;
-          })}
+            {response && (
+              <div className="mt-6 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-xl font-semibold mb-4 text-blue-600">Analysis Result:</h3>
+                <div className="text-lg font-bold text-blue-700 mb-3">{response.class}</div>
+                <div className="text-gray-700 space-y-3">
+                  {response.info.split("\n").map((line, index) => (
+                    <p key={index} className="leading-relaxed">{line}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Infrastructure Education Section */}
+          <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-100">
+            <h2 className="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-2">
+              <FiMapPin /> Infrastructure Education
+            </h2>
+            
+            <form onSubmit={handleInfraSubmit} className="space-y-6">
+              <label className="block">
+                <span className="text-gray-700 mb-2 block">Upload Infrastructure Image:</span>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleInfraFileChange}
+                    className="block w-full text-sm text-gray-500 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
+                  />
+                </div>
+              </label>
+              
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg transition-colors flex items-center gap-2 w-full justify-center"
+              >
+                Analyze Infrastructure
+              </button>
+            </form>
+
+            {infraPreview && (
+              <div className="mt-6 space-y-4">
+                <h3 className="text-lg font-semibold">Preview:</h3>
+                <img 
+                  src={infraPreview} 
+                  alt="Infrastructure Preview" 
+                  className="w-full h-64 object-cover rounded-xl border-2 border-gray-200" 
+                />
+              </div>
+            )}
+
+            {infraResponse && (
+              <div className="mt-6 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-xl font-semibold mb-4 text-blue-600">Assessment Result:</h3>
+                <div className="text-lg font-bold text-blue-700 mb-3">{infraResponse.damage_class}</div>
+                <div className="text-gray-700 space-y-3">
+                  {infraResponse.damage_info.split("\n").map((line, index) => (
+                    <p key={index} className="leading-relaxed">{line}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    )}
-  </div>
-
-  {/* Infrastructure Education Section */}
-  <div className="bg-white p-6 rounded-xl shadow-lg">
-    <h2 className="text-2xl font-bold mb-6 text-blue-600">Infrastructure Education</h2>
-    <form onSubmit={handleInfraSubmit}>
-      <label className="block mb-4">
-        <span className="text-gray-700">Upload Infrastructure Image:</span>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleInfraFileChange}
-          className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-        />
-      </label>
-      <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg transition-colors"
-      >
-        Analyze
-      </button>
-    </form>
-
-    {infraPreview && (
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-3">Preview:</h3>
-        <img src={infraPreview} alt="Infrastructure Preview" className="w-full h-64 object-cover rounded-lg border-2 border-gray-200" />
-      </div>
-    )}
-
-    {infraResponse && (
-      <div className="mt-6 bg-gray-50 p-4 rounded-lg">
-        <h3 className="text-xl font-semibold mb-2 text-blue-600">Assessment Result:</h3>
-        <div className="text-lg font-bold text-gray-800 mb-2">{infraResponse.damage_class}</div>
-        <div className="text-gray-600">
-          {infraResponse.damage_info.split("\n").map((line, index) => {
-            if (line.trim().endsWith(":")) {
-              return <p key={index} className="font-bold mt-4">{line.trim()}</p>; // Bold title without bullet
-            }
-            return line.trim() ? <li key={index} className="list-disc list-inside">{line}</li> : <br key={index} />;
-          })}
-        </div>
-      </div>
-    )}
-  </div>
-</div>
-
       )}
     </div>
   );
