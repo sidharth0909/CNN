@@ -69,7 +69,7 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 ---
 ## 📞 Contact
-For questions or collaborations, reach out to **Sidharth Saholiya** at **your-email@example.com**.
+For questions or collaborations, reach out to **Sidharth Saholiya** at **sidharthsaholiya@gmail.com**.
 
 ---
 ## 🛠 Development Notes
