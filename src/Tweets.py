@@ -1,102 +1,44 @@
-import os
+from flask import Flask, jsonify
+from flask_cors import CORS  # Import CORS
 import requests
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from dotenv import load_dotenv
-from datetime import datetime
-
-load_dotenv()
+import xmltodict
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Enable CORS for all routes
 
-TWITTER_BEARER_TOKEN = os.getenv("TWITTER_BEARER_TOKEN")
+GDACS_RSS_URL = "https://www.gdacs.org/xml/rss.xml"
 
-def process_tweets(response):
-    """ Enhanced tweet processing with better error handling """
-    users = {u['id']: u for u in response.get('includes', {}).get('users', [])}
-    media = {m['media_key']: m for m in response.get('includes', {}).get('media', [])}
-
-    processed = []
-    for tweet in response.get('data', []):
-        try:
-            user = users.get(tweet['author_id'], {})
-            media_keys = tweet.get('attachments', {}).get('media_keys', [])
-            
-            tweet_data = {
-                "id": tweet['id'],
-                "text": tweet.get('text', ''),
-                "date": datetime.strptime(tweet['created_at'], "%Y-%m-%dT%H:%M:%S.%fZ").isoformat(),
-                "link": f"https://twitter.com/{user.get('username', '')}/status/{tweet['id']}",
-                "user": {
-                    "id": user.get('id', ''),
-                    "name": user.get('name', 'Unknown'),
-                    "username": user.get('username', 'unknown'),
-                    "avatar": user.get('profile_image_url', '').replace('_normal', ''),
-                },
-                "stats": {
-                    "comments": tweet.get('public_metrics', {}).get('reply_count', 0),
-                    "retweets": tweet.get('public_metrics', {}).get('retweet_count', 0),
-                    "likes": tweet.get('public_metrics', {}).get('like_count', 0),
-                },
-                "pictures": [media[mk]['url'] for mk in media_keys 
-                           if media.get(mk, {}).get('type') == 'photo'],
-                "videos": [media[mk]['preview_image_url'] for mk in media_keys 
-                          if media.get(mk, {}).get('type') == 'video'],
-            }
-            processed.append(tweet_data)
-        except KeyError as e:
-            app.logger.error(f"Error processing tweet: {e}")
-            continue
-            
-    return processed
-
-@app.route('/api/tweets', methods=['GET'])
-def get_tweets():
+@app.route("/api/disasters", methods=["GET"])
+def get_disasters():
     try:
-        if not TWITTER_BEARER_TOKEN:
-            return jsonify({"error": "Server configuration error"}), 500
-
-        query = request.args.get('q', '').strip()
-        if not query:
-            return jsonify({"error": "Search query is required"}), 400
-
-        # Enhanced disaster-related query
-        search_query = (
-            f"({query}) (help OR relief OR rescue OR emergency OR volunteer OR donation) "
-            f"-is:retweet -is:reply lang:en"
-        )
-        
-        params = {
-            'query': search_query,
-            'max_results': 4,
-            'expansions': 'author_id,attachments.media_keys',
-            'tweet.fields': 'created_at,public_metrics,attachments,entities',
-            'user.fields': 'name,username,profile_image_url',
-            'media.fields': 'preview_image_url,url,type'
-        }
-
-        headers = {"Authorization": f"Bearer {TWITTER_BEARER_TOKEN}"}
-        response = requests.get(
-            "https://api.twitter.com/2/tweets/search/recent",
-            headers=headers,
-            params=params
-        )
-
+        response = requests.get(GDACS_RSS_URL)
         if response.status_code != 200:
-            error = response.json().get('detail', 'Unknown Twitter API error')
-            return jsonify({"error": error}), response.status_code
+            return jsonify({"error": "Failed to fetch disaster data"}), 500
 
-        data = response.json()
-        return jsonify(process_tweets(data))
+        # Convert XML to dictionary
+        data = xmltodict.parse(response.content)
+        items = data["rss"]["channel"]["item"]
+
+        # Extract necessary details
+        disasters = []
+        for item in items[:4]:  # Get top 5 recent disasters
+            disaster = {
+                "title": item["title"],
+                "description": item["description"],
+                "link": item["link"],
+                "pubDate": item["pubDate"],
+                "severity": item.get("gdacs:severity", {}).get("#text", "Unknown"),
+                "alertlevel": item.get("gdacs:alertlevel", "Unknown"),
+                "image": item.get("enclosure", {}).get("@url", ""),
+                "latitude": item["geo:Point"]["geo:lat"],
+                "longitude": item["geo:Point"]["geo:long"]
+            }
+            disasters.append(disaster)
+
+        return jsonify(disasters)
 
     except Exception as e:
-        app.logger.error(f"API Error: {str(e)}")
-        return jsonify({"error": "Internal server error"}), 500
+        return jsonify({"error": str(e)}), 500
 
-@app.route('/health')
-def health_check():
-    return jsonify({"status": "healthy", "version": "1.0.0"})
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+if __name__ == "__main__":
+    app.run(debug=True, port=5001)  # Ensure it runs on the correct port
