@@ -68,7 +68,7 @@ const Home = () => {
   const monitoringOptions = {
     "Heavy Rain": "https://mosdac.gov.in/heavy-rain/",
     "Recent Earthquake": "https://riseq.seismo.gov.in/riseq/earthquake/recent_earthquake",
-    "Heat": "https://mosdac.gov.in/temperature/",
+    "Heat": "https://mosdac.gov.in/temperature/"
   };
 
   const [selectedIndex, setSelectedIndex] = useState("Heavy Rain");

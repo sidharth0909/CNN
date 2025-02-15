@@ -24,6 +24,7 @@ import HeatwavesReady from "./components/HeatwavesReady";
 import ChatBot from "./components/chatbot"; // Import ChatBot
 import EmergencyPage from "./components/Emergency";
 import Creators from "./components/Creator";
+import DisasterResources from "./components/DisasterResources";
 
 const App = () => {
   return (
@@ -56,10 +57,11 @@ const App = () => {
             <Route path="/heatwaves-ready" element={<HeatwavesReady />} />
             <Route path="/emergency" element={<EmergencyPage />} />
             <Route path="/creators" element={<Creators />} />
+            <Route path="/explore" element={<DisasterResources />} />
           </Routes>
         </div>
         <Footer />
-        <ChatBot /> {/* Add ChatBot here to keep it globally accessible */}
+        <ChatBot />
       </div>
     </Router>
   );

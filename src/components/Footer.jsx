@@ -73,7 +73,7 @@ const Footer = () => {
               <a href="https://twitter.com/NDRFHQ" className="p-2 bg-gray-800 rounded-full hover:bg-blue-500 transition-colors">
                 <FaLinkedin className="text-xl" />
               </a>
-              <a href="https://github.com/disaster-management" className="p-2 bg-gray-800 rounded-full hover:bg-gray-600 transition-colors">
+              <a href="https://github.com/sidharth0909/CNN" className="p-2 bg-gray-800 rounded-full hover:bg-gray-600 transition-colors">
                 <FaGithub className="text-xl" />
               </a>
             </div>
@@ -90,7 +90,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center">
           <p className="text-gray-500 text-sm">
-            © 2024 DisasterGuard. All rights reserved. | 
+            © 2025 DisasterGuard. All rights reserved. | 
             <a href="/privacy" className="hover:text-blue-400 ml-2">Privacy Policy</a> | 
             <a href="/terms" className="hover:text-blue-400 ml-2">Terms of Service</a>
           </p>

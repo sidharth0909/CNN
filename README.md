@@ -15,3 +15,5 @@ for python file -> python file.py
 twitter api -> https://developer.x.com/en/portal/dashboard
 5001 port for twitter
 5000 port for classification
+
+https://www.gdacs.org/floodmerge/data_v2.aspx
