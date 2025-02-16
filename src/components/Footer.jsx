@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 import { FiAlertTriangle } from "react-icons/fi";
 
 const Footer = () => {
@@ -70,16 +70,34 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-xl font-bold text-white mb-4">Stay Connected</h4>
             <div className="flex space-x-4">
-              <a href="https://twitter.com/NDRFHQ" className="p-2 bg-gray-800 rounded-full hover:bg-blue-500 transition-colors">
+              <a
+                href="https://twitter.com/NDRFHQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full hover:bg-blue-500 transition-colors"
+              >
+                <FaTwitter className="text-xl" />
+              </a>
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full hover:bg-blue-700 transition-colors"
+              >
                 <FaLinkedin className="text-xl" />
               </a>
-              <a href="https://github.com/sidharth0909/CNN" className="p-2 bg-gray-800 rounded-full hover:bg-gray-600 transition-colors">
+              <a
+                href="https://github.com/sidharth0909/CNN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-gray-800 rounded-full hover:bg-gray-600 transition-colors"
+              >
                 <FaGithub className="text-xl" />
               </a>
             </div>
             <div className="mt-6">
-              <Link 
-                to="/plan" 
+              <Link
+                to="/plan"
                 className="inline-block w-full py-2 px-4 bg-red-600 text-white text-center rounded-lg hover:bg-red-700 transition-colors font-semibold"
               >
                 Emergency Preparedness Guide
@@ -88,11 +106,17 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Footer Bottom */}
         <div className="border-t border-gray-800 mt-12 pt-8 text-center">
           <p className="text-gray-500 text-sm">
-            © 2025 DisasterGuard. All rights reserved. | 
-            <a href="/privacy" className="hover:text-blue-400 ml-2">Privacy Policy</a> | 
-            <a href="/terms" className="hover:text-blue-400 ml-2">Terms of Service</a>
+            © 2025 DisasterGuard. All rights reserved. |{" "}
+            <a href="/privacy" className="hover:text-blue-400 ml-2">
+              Privacy Policy
+            </a>{" "}
+            |{" "}
+            <a href="/terms" className="hover:text-blue-400 ml-2">
+              Terms of Service
+            </a>
           </p>
         </div>
       </div>
