@@ -349,25 +349,26 @@ const DisasterResourceApp = () => {
           />
         </div>
       </div>
-      <div className="flex gap-4">
-        <div className="md:w-full mb-4 border border-gray-400 p-2 rounded-md">
-          <DatePicker
-            selected={formData.fromDate}
-            onChange={(date) => handleDateChange(date, "fromDate")}
-            placeholderText="From Date"
-            className="outline-none bg-white text-black"
-          />
-        </div>
+      <div className="flex flex-col md:flex-row gap-4">
+  <div className="w-full md:w-1/2 mb-4 border border-gray-400 p-2 rounded-md">
+    <DatePicker
+      selected={formData.fromDate}
+      onChange={(date) => handleDateChange(date, "fromDate")}
+      placeholderText="From Date"
+      className="outline-none bg-white text-black w-full"
+    />
+  </div>
 
-        <div className="md:w-full mb-4 border border-gray-400 p-2 rounded-md">
-          <DatePicker
-            selected={formData.endDate}
-            onChange={(date) => handleDateChange(date, "endDate")}
-            placeholderText="End Date"
-            className="outline-none bg-white text-black"
-          />
-        </div>
-      </div>
+  <div className="w-full md:w-1/2 mb-4 border border-gray-400 p-2 rounded-md">
+    <DatePicker
+      selected={formData.endDate}
+      onChange={(date) => handleDateChange(date, "endDate")}
+      placeholderText="End Date"
+      className="outline-none bg-white text-black w-full"
+    />
+  </div>
+</div>
+
 
       <button
         className="px-4 py-2 bg-blue-500 text-white rounded-md"
