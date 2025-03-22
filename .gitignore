@@ -26,3 +26,5 @@ dist-ssr
 *.pyc
 *.env
 src/env/
+.ganache-data/
+.DisasterReliefFund.json

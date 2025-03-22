@@ -103,7 +103,7 @@ const ChatBot = () => {
             {/* Chat Input */}
             <div className="p-4 border-t bg-white">
               <div className="mt-4 flex space-x-2">
-                <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === "Enter" && handleSend()} placeholder="Type your message..." className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" disabled={isLoading} />
+                <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === "Enter" && handleSend()} placeholder="Type your message..." className="flex-1 p-2 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" disabled={isLoading} />
                 <button onClick={handleSend} disabled={isLoading} className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50">
                   <FaPaperPlane />
                 </button>

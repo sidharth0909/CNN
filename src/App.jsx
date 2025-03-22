@@ -1,4 +1,5 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Blog from "./components/Blog";
 import Services from "./components/Services";
@@ -25,6 +26,7 @@ import ChatBot from "./components/chatbot"; // Import ChatBot
 import EmergencyPage from "./components/Emergency";
 import Creators from "./components/Creator";
 import DisasterResources from "./components/DisasterResources";
+import DisasterFund from "./components/DisasterFund";
 
 const App = () => {
   return (
@@ -37,6 +39,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/social_media" element={<Service />} />
             <Route path="/services" element={<DisasterResourceApp />} />
+            <Route path="/disaster_fund" element={<DisasterFund />} />
             <Route
               path="/resources_requests"
               element={<DisasterResourceApp />}

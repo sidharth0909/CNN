@@ -21,7 +21,7 @@ def get_disasters():
 
         # Extract necessary details
         disasters = []
-        for item in items[:4]:  # Get top 5 recent disasters
+        for item in items[:5]:  # Get top 5 recent disasters
             disaster = {
                 "title": item["title"],
                 "description": item["description"],
