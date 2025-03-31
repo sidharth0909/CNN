@@ -128,6 +128,23 @@ npm start
 
 ---
 
+
+## Preview of Project 
+
+- **[Campaigns.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Campaigns.png)** → Likely represents disaster relief campaigns or fundraising efforts.  
+- **[Chatbot.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Chatbot.png)** → Displays an AI-powered chatbot interface for user interaction.  
+- **[Disaster_classification_education.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_education.png)** → Demonstrates educational insights related to disaster classification.  
+- **[Disaster_classification_emergency.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_emergency.png)** → Shows real-time emergency disaster classification results.  
+- **[Emergency_page.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Emergency_page.png)** → Represents the emergency assistance interface for users in crisis.  
+- **[Historical_data.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Historical_data.png)** → Displays past disaster data for analysis and insights.  
+- **[Home.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Home.png)** → The homepage of the application, providing navigation to key features.  
+- **[Relief-fund.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Relief-fund.png)** → Related to financial aid or support funds for disaster relief.  
+- **[Safety.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Safety.png)** → Highlights safety measures and protocols in case of a disaster.  
+- **[Services.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Services.png)** → Lists the services provided by the disaster management system.  
+- **[Social_media_analysis.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Social_media_analysis.png)** → Analyzes disaster-related data from social media platforms.  
+- **[resource request.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/resource%20request.png)** → Represents a page where users can request resources during a disaster.  
+
+
 ## 📌 Possible Improvements
 ✅ **Enhance AI Accuracy:** Improve CNN & Xception models with better datasets.  
 ✅ **Integration with Government Databases:** Provide real-time access to official disaster alerts.  
