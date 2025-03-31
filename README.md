@@ -129,20 +129,18 @@ npm start
 
 ## Preview of Project 
 
-Here are the image links in the format you requested:
-
-1. ![Campaigns_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Campaigns.png)
-2. ![Chatbot_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Chatbot.png)
-3. ![Disaster_classification_education_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_education.png)
-4. ![Disaster_classification_emergency_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_emergency.png)
-5. ![Emergency_page_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Emergency_page.png)
-6. ![Historical_data_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Historical_data.png)
-7. ![Home_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Home.png)
-8. ![Relief-fund_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Relief-fund.png)
-9. ![Safety_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Safety.png)
-10. ![Services_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Services.png)
-11. ![Social_media_analysis_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Social_media_analysis.png)
-12. ![resource_request_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/resource%20request.png)
+![Home_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Home.png)
+![Services_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Services.png)
+![resource_request_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/resource%20request.png)
+![Disaster_classification_education_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_education.png)
+![Disaster_classification_emergency_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_emergency.png)
+![Historical_data_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Historical_data.png)
+![Social_media_analysis_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Social_media_analysis.png)
+![Emergency_page_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Emergency_page.png)
+![Relief-fund_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Relief-fund.png)
+![Campaigns_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Campaigns.png)
+![Safety_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Safety.png)
+![Chatbot_png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Chatbot.png)
 
 
 ## 📌 Possible Improvements
