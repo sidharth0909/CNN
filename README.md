@@ -131,18 +131,41 @@ npm start
 
 ## Preview of Project 
 
-- **[Campaigns.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Campaigns.png)** → Likely represents disaster relief campaigns or fundraising efforts.  
-- **[Chatbot.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Chatbot.png)** → Displays an AI-powered chatbot interface for user interaction.  
-- **[Disaster_classification_education.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_education.png)** → Demonstrates educational insights related to disaster classification.  
-- **[Disaster_classification_emergency.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Disaster_classification_emergency.png)** → Shows real-time emergency disaster classification results.  
-- **[Emergency_page.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Emergency_page.png)** → Represents the emergency assistance interface for users in crisis.  
-- **[Historical_data.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Historical_data.png)** → Displays past disaster data for analysis and insights.  
-- **[Home.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Home.png)** → The homepage of the application, providing navigation to key features.  
-- **[Relief-fund.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Relief-fund.png)** → Related to financial aid or support funds for disaster relief.  
-- **[Safety.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Safety.png)** → Highlights safety measures and protocols in case of a disaster.  
-- **[Services.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Services.png)** → Lists the services provided by the disaster management system.  
-- **[Social_media_analysis.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/Social_media_analysis.png)** → Analyzes disaster-related data from social media platforms.  
-- **[resource request.png](https://github.com/sidharth0909/CNN/blob/master/src/assets/Preview/resource%20request.png)** → Represents a page where users can request resources during a disaster.  
+1. **[Campaigns.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Campaigns.png)**  
+   _Shows the section related to campaigns, possibly depicting various campaigns in your system for emergency or disaster response._
+
+2. **[Chatbot.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Chatbot.png)**  
+   _Represents the chatbot interface used for interaction in the system, likely providing information or support for disaster management._
+
+3. **[Disaster_classification_education.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Disaster_classification_education.png)**  
+   _Displays the "Disaster Classification" educational page that helps educate users about different types of disasters._
+
+4. **[Disaster_classification_emergency.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Disaster_classification_emergency.png)**  
+   _Shows the emergency page for disaster classification, where users can receive immediate classification during an emergency._
+
+5. **[Emergency_page.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Emergency_page.png)**  
+   _Displays the main emergency response page, which provides options for users to take actions during a disaster scenario._
+
+6. **[Historical_data.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Historical_data.png)**  
+   _Represents the page with historical data related to past disasters, used for analyzing trends and preparing for future disasters._
+
+7. **[Home.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Home.png)**  
+   _Shows the homepage of the platform where users can navigate to various features like disaster response, education, and more._
+
+8. **[Relief-fund.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Relief-fund.png)**  
+   _Displays the section dedicated to relief funds, which might show available funds for disaster relief and how they can be accessed._
+
+9. **[Safety.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Safety.png)**  
+   _Represents the safety page that likely educates users on how to stay safe during emergencies, with tips and guidelines._
+
+10. **[Services.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Services.png)**  
+    _Shows the services offered by your system or platform related to disaster response, safety, and emergency services._
+
+11. **[Social_media_analysis.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/Social_media_analysis.png)**  
+    _Represents the social media analysis feature that might track social media for disaster-related posts, providing real-time data._
+
+12. **[resource request.png](https://raw.githubusercontent.com/sidharth0909/CNN/master/src/assets/Preview/resource%20request.png)**  
+    _Displays the page related to resource requests, allowing users or organizations to request resources during a disaster._
 
 
 ## 📌 Possible Improvements
