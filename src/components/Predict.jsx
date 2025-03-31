@@ -332,11 +332,11 @@ const Predict = () => {
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/* Disaster Education Section */}
-          <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-100">
-            <h2 className="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-2">
-              <FiAlertTriangle /> Disaster Education
-            </h2>
+        {/* Disaster Education Section */}
+        <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-100">
+          <h2 className="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-2">
+            <FiAlertTriangle /> Disaster Education
+          </h2>
             
             <form onSubmit={handleImageSubmit} className="space-y-6">
               <label className="block">
@@ -385,9 +385,9 @@ const Predict = () => {
 
           {/* Infrastructure Education Section */}
           <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-100">
-            <h2 className="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-2">
-              <FiMapPin /> Infrastructure Education
-            </h2>
+      <h2 className="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-2">
+        <FiMapPin /> Infrastructure Education
+      </h2>
             
             <form onSubmit={handleInfraSubmit} className="space-y-6">
               <label className="block">
